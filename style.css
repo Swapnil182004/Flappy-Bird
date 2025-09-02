@@ -10,6 +10,7 @@
 }
 
 body {
+    width: 100vw;
     height: 100vh; /* Ensure full height for vertical centering */
     background: url('Images/background.jpg');
     background-repeat: no-repeat;
@@ -77,4 +78,74 @@ body {
     transform: scale(1.08);
     background-color: var(--hover-color);
     cursor: pointer;
+}
+/* MOBILE / TABLET RESPONSIVENESS */
+@media (max-width: 768px) {
+    .welcome {
+        width: 96vw;
+        min-width: 0;
+        margin: 0 auto;
+        padding: 2vh 2vw;
+        box-sizing: border-box;
+        border-radius: 2vw;
+        background: rgba(255,255,255,0.15);
+        box-shadow: 0 2px 16px #0002;
+        position: relative;
+        top: 5vh;
+    }
+    .heading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2vw;
+        margin-bottom: 2vh;
+    }
+    .head-img-1, .head-img-2 {
+        width: 32px;
+        height: 32px;
+    }
+    .heading h3 {
+        font-size: 2rem;
+        margin: 0;
+    }
+    .start-game, .options, .exit {
+        display: block;
+        width: 90vw;
+        max-width: 320px;
+        margin: 2vh auto;
+        padding: 1.2em 0;
+        font-size: 1.2rem;
+        text-align: center;
+        border-radius: 1em;
+        background: #ff6f00;
+        color: #fff;
+        text-decoration: none;
+        font-family: 'Rock Salt', cursive;
+        box-shadow: 0 2px 8px #0001;
+        transition: background 0.2s;
+    }
+    .start-game:hover, .options:hover, .exit:hover {
+        background: #ed5807;
+    }
+}
+
+/* Extra Small Devices */
+@media (max-width: 480px) {
+    .welcome {
+        width: 100vw;
+        padding: 1vh 1vw;
+        top: 2vh;
+    }
+    .heading h3 {
+        font-size: 1.3rem;
+    }
+    .start-game, .options, .exit {
+        width: 96vw;
+        font-size: 1rem;
+        padding: 1em 0;
+    }
+    .head-img-1, .head-img-2 {
+        width: 24px;
+        height: 24px;
+    }
 }

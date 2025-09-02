@@ -122,7 +122,7 @@ function movePipe(pipeDown, pipeUp) {
             scoreNumber2.innerHTML = score;
 
             //level up
-            if(score == 2 && !dragonActive){
+            if(score == 10 && !dragonActive){
                 console.log("Score = 10")
                 document.body.style.backgroundImage = "url('images/background_night.jpg')";
 
