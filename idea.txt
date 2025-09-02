@@ -1,0 +1,7 @@
+main 5 functions in js:
+startgame() to start the game
+gameover() if the game over
+createpipe() for creating pipe in each 2sec in different height gap
+movepipe() for move pipe from left to right
+movebird() for moving the bird with velocity jump and gravity calculation
+swapbirdWing() for show that the bird is flying
