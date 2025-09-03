@@ -12,6 +12,9 @@ gameOverBox.style.visibility = "hidden";
 gameOverBox.style.opacity = "0";
 
 
+//for sound
+const backgroundMusic = new Audio('sounds/background_music.mp3');
+
 //for dragon
 const dragon = document.getElementById("dragon");
 let dragonActive = false;
@@ -34,7 +37,10 @@ let wingInterval = null;
 function createPipe() {
     if (isGameOver) return;
 
-    const gap = 160;
+    let gap = 160;
+    if(score >= 70) gap = 120; //hard level smaller gap
+    if(score >= 100) gap = 100;
+    
     const minPipeHeight = 50;
     const maxPipeHeight = window.innerHeight - gap - minPipeHeight;
 
@@ -69,7 +75,8 @@ function isColliding(bird, pipe) {
     const pipeRect = pipe.getBoundingClientRect();
 
     // some mercy in the easy level
-    const mercy = 18;
+    let mercy = 18;
+    if(score >= 60) mercy = 8; //hard level less mercy
     
 
     return !(
@@ -79,6 +86,7 @@ function isColliding(bird, pipe) {
         birdRect.left + mercy > pipeRect.right
     );
 }
+
 
 // Move pipes
 function movePipe(pipeDown, pipeUp) {
@@ -102,6 +110,10 @@ function movePipe(pipeDown, pipeUp) {
         }
 
         pipeX -= 3;
+        if(score>=70)
+            pipeX -= 2; //speed increase
+        
+
         pipeDown.style.left = `${pipeX}px`;
         pipeUp.style.left = `${pipeX}px`;
 
@@ -143,6 +155,11 @@ function movePipe(pipeDown, pipeUp) {
                 //wait the dragon for somtime to cross the bird the remaining pipes
                 setTimeout(() => {
 
+                    //sound
+                    backgroundMusic.pause();
+                    const dragonSound = new Audio('sounds/dragon_sound.mp3');
+                    dragonSound.play();
+
                     dragonInterval = setInterval(() => {
                     //Follow bird
                     const birdRect = bird.getBoundingClientRect();
@@ -160,7 +177,11 @@ function movePipe(pipeDown, pipeUp) {
                         dragonRect.top < birdRect.bottom &&
                         dragonRect.bottom > birdRect.top
                     ) {
-                        gameOver();
+                        //sound
+                        dragonSound.pause();
+                        
+                        //small delay to avoid sound overlap
+                        setTimeout(() => {gameOver();}, 200);
                         
                         
                     }
@@ -172,21 +193,34 @@ function movePipe(pipeDown, pipeUp) {
                     dragon.style.display = "none";
                     dragon.style.visibility = "hidden"; // Hide dragon after
                     dragonActive = false;
+
+                    //background music resume
+                    backgroundMusic.play();
+
                     // Resume pipes
                     pipeInterval = setInterval(createPipe, 2000);
                 }, 5000);
                 }, 3000);
 
-                
             }
 
             if(score == 20){
                 console.log("Score = 20")
                 document.body.style.backgroundImage = "url('images/background.jpg')";
             }
+
+            //again night at 50
+            if(score == 50){
+                console.log("Score = 50")
+                document.body.style.backgroundImage = "url('images/background_night.jpg')";
+            }
+            if(score == 60){
+                console.log("Score = 80")
+                document.body.style.backgroundImage = "url('images/background_day.jpg')";
+            }
         }
 
-        // Remove when off screen
+        // Remove pipes when off screen
         if (pipeRight < -100) {
             pipeDown.remove();
             pipeUp.remove();
@@ -237,7 +271,16 @@ function swapBirdWing() {
 // Game Over
 function gameOver() {
     isGameOver = true;
+
+    //sound
+    backgroundMusic.pause();
+    const gameOverSound = new Audio('sounds/game_over.mp3');
+    gameOverSound.play();
+
+    //bird dies
     bird.src = "images/bird1_died.png";
+
+
 
     gameOverBox.style.visibility = "visible";
     gameOverBox.style.opacity = "1";
@@ -269,6 +312,13 @@ function startGame() {
     
         if (!isSpacePressed) {
             isSpacePressed = true;
+
+            //sound
+            
+            backgroundMusic.loop = true;
+            backgroundMusic.volume = 0.5;
+            backgroundMusic.play();
+            
             velocity = jump;
             startMessage.style.visibility = "hidden";
             movingGrass.style.animationPlayState = "running";
