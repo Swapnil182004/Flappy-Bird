@@ -171,6 +171,7 @@ function movePipe(pipeDown, pipeUp) {
                     dragonSound.play();
 
                     dragonInterval = setInterval(() => {
+
                     //Follow bird
                     const birdRect = bird.getBoundingClientRect();
                     if (dragonY < birdRect.top) dragonY += 1;
@@ -287,12 +288,16 @@ function gameOver() {
     //sound
     backgroundMusic.pause();
     const gameOverSound = new Audio('sounds/game_over.mp3');
+
+
     gameOverSound.play();
+
+    
 
     //bird dies
     bird.src = "images/bird1_died.png";
 
-
+    
 
     gameOverBox.style.visibility = "visible";
     gameOverBox.style.opacity = "1";
