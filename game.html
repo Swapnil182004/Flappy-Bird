@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="images/bird2 up.png" type="image/x-icon">
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=PT+Serif+Caption:ital@0;1&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rock+Salt&family=Satisfy&display=swap" rel="stylesheet">
@@ -51,17 +54,46 @@
             backdrop-filter: blur(12px) saturate(150%);
         }
 
-        .start-message p{
-            /* visibility: hidden; */
-            
+        .start-message p {
             position: absolute;
-            padding-left: 20vw;
-            padding-top: 40vh;
-
+            top: 50vh;
+            left: 50vw;
+            transform: translate(-50%, -50%);
             z-index: 2;
             font-size: 2rem;
             color: rgb(47, 45, 45);
             font-family: "Rock Salt";
+            padding: 0.5rem 1rem;
+            border-radius: 1rem;
+            background: rgba(255,255,255,0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .score {
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+            position: fixed;
+            top: 2vh;
+            left: 0.2vw;
+            z-index: 1000;
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--font-color);
+            margin-bottom: 1.2rem;
+        }
+        .pause{
+        display: flex;
+        flex-direction: row;
+        gap: 0.8rem;
+        position: fixed;
+        top: 15vh;
+        left: 0.2vw;
+        z-index: 1000;
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--font-color);
         }
 
         .bird img{
@@ -106,6 +138,7 @@
             100% { left: -100px; }
         }
 
+
         .game-over {
             background:
                 url('images/cracks.png') center/cover no-repeat,
@@ -141,14 +174,12 @@
             margin-bottom: 1rem;
         }
 
-        .score {
+        .gameover-score {
             display: flex;
             flex-direction: row;
-            gap: 8px;
-            font-size: 3rem;
-            font-weight: bold;
-            color: var(--font-color);
-            margin-bottom: 1.5rem;
+            color: white;
+            font-size: 2rem;
+            padding: 0.2em 0.5em;
         }
 
         .game-over .btns {
@@ -182,7 +213,8 @@
 
     /* Start message centered and scaled */
     .start-message p {
-        top: 50%;
+        
+        top: 25vh;
         left: 50%;
         transform: translate(-50%, -50%);
         font-size: 1.2rem;
@@ -190,6 +222,8 @@
         border-radius: 1rem;
         background: rgba(255,255,255,0.18);
         position: absolute;
+        display: flex;
+
     }
 
     /* Bird scaled and repositioned */
@@ -232,7 +266,7 @@
 
     /* Grass height adjusted */
     .grass {
-        height: 130vh;
+        height: 50vh;
         min-height: 160px;
         width: 200%;
         bottom: 0;
@@ -251,6 +285,13 @@
         width: 60vw;
         height: auto;
     }
+    .gameover-score {
+        display: flex;
+        flex-direction: row;
+        color: white;
+        font-size: 1.8rem;
+        padding: 0.2em 0.5em;
+    }
 
     .game-over .btns {
         flex-direction: column;
@@ -264,9 +305,37 @@
 
     /* Score smaller */
     .score {
+        position: fixed;
+        top: 2vh;
+        left: 2vw;
+        z-index: 1000;
         font-size: 1.5rem;
         padding: 0.3em 0.7em;
         gap: 0.5em;
+    }
+    .score p{
+        font-size: 1.5rem;
+    }
+    .pause {
+        display: flex;
+        position: fixed;
+        top: 2vh;
+        left: 80vw;
+        font-size: 1.2rem;
+        gap: 0.4rem;
+        padding: 0.3em 0.7em;
+        border-radius: 1em;
+        z-index: 1000;
+    }
+
+    .pause i {
+        font-size: 1.5rem;
+    }
+
+    .pause p {
+        font-size: 1.5rem;
+        margin: 0;
+        padding: 0;
     }
 }
 
@@ -298,15 +367,39 @@
         max-width: 60px;
     }
     .score {
-        font-size: 1.1rem;
+        position: fixed;
+        top: 2vh;
+        left: 2vw;
+        z-index: 1000;
+        font-size: 1.2rem;
+        padding: 0.2em 0.5em;
+        gap: 0.3em;
+    }
+    .pause {
+        display: flex;
+        position: fixed;
+        top: 2vh;
+        left: 70vw;
+        font-size: 1rem;
+        gap: 0.3rem;
+        padding: 0.2em 0.5em;
+        border-radius: 1em;
+        z-index: 1000;
+    }
+    .gameover-score {
+        display: flex;
+        flex-direction: row;
+        color: white;
+        font-size: 1.8rem;
         padding: 0.2em 0.5em;
     }
+
     .game-over {
         padding: 0.5em 0.2em;
-        width: 98vw;
+        width: 70vw;
     }
     .game-over img {
-        width: 90vw;
+        width: 120vw;
         max-width: 120px;
     }
     .start-message p {
@@ -314,7 +407,7 @@
         padding: 0.5rem;
     }
     .grass {
-        height: 8vh;
+        height: 100vh;
         min-height: 24px;
     }
 }
@@ -330,6 +423,11 @@
     <div class="score">
         <p>Score: </p>
         <p class="scorenumber"> </p>
+    </div>
+
+    <div class="pause" id="pauseBtn">
+        <i class='bx bx-pause-circle' id="pauseIcon"></i>
+        <p id="pauseText">Pause</p>
     </div>
 
     <div class="start-message">
@@ -357,7 +455,7 @@
     <div class="game-over">
         <img src="images/gover.png" alt="game over" height="200px" width="500px">
 
-        <div class="score">
+        <div class="gameover-score">
             <p>Your Score: </p>
             <p class="scorenumber"> </p>
         </div>
@@ -370,6 +468,25 @@
     </div>
 
     <script src="game.js"></script>
+
     
+    <script>
+    // Change start message for mobile devices
+    function updateStartMessage() {
+        const startMsg = document.querySelector('.start-message p');
+        if (window.innerWidth <= 768) {
+            startMsg.innerText = "Tap to start";
+        } else {
+            startMsg.innerHTML = "Press Space to <br> start the game";
+        }
+    }
+
+    // Run on page load
+    updateStartMessage();
+
+    // Update on window resize
+    window.addEventListener('resize', updateStartMessage);
+</script>
+
 </body>
 </html>

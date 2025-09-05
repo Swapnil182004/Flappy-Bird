@@ -29,9 +29,14 @@ let velocity = 0;
 let isGameOver = false;
 let score = 0;
 
+
+
 let isSpacePressed = false;
 let pipeInterval = null;
 let wingInterval = null;
+
+let isPaused = false;
+let savedVelocity = 0;
 
 // Create pipes
 function createPipe() {
@@ -353,3 +358,44 @@ document.addEventListener("touchstart", () => {
     else if(!isGameOver && isSpacePressed)
         velocity = jump;
 });//for mobile
+
+
+
+function togglePause() {
+    const pauseBtn = document.getElementById("pauseBtn");
+    const pauseIcon = pauseBtn.querySelector("pauseIcon");
+    const pauseText = pauseBtn.querySelector("pauseText");
+
+    if (!isPaused) {
+        isPaused = true;
+        savedVelocity = velocity;
+        velocity = 0;
+
+        //pause Intervals
+        if (pipeInterval) clearInterval(pipeInterval);
+        if (wingInterval) clearInterval(wingInterval);
+
+        //stop moving grass
+        movingGrass.style.animationPlayState = "paused";
+
+        //change icon and text
+        pauseIcon.className = 'bx bx-play-circle';
+        pauseText.textContent = "Play";
+    }
+    else {
+        isPaused = false;
+        velocity = savedVelocity;
+
+        //resume intervals
+        if (!isGameOver) {
+            pipeInterval = setInterval(createPipe, 2000);
+            wingInterval = setInterval(swapBirdWing, 200);
+            movingGrass.style.animationPlayState = "running";
+            backgroundMusic.play();
+        }
+        //change icon and text
+        pauseIcon.className = 'bx bx-pause-circle';
+        pauseText.textContent = "Pause";
+    }
+}
+    document.getElementById('pauseBtn').addEventListener('click', togglePause);
