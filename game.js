@@ -42,6 +42,8 @@ let savedVelocity = 0;
 function createPipe() {
     if (isGameOver) return;
 
+    if(isPaused) return; // Skip pipe creation if paused
+
     let gap = 160;
     if(score >= 70) gap = 120; //hard level smaller gap
     if(score >= 100) gap = 100;
@@ -107,6 +109,9 @@ function movePipe(pipeDown, pipeUp) {
     let hasScored = false;
 
     const moveInterval = setInterval(() => {
+
+        if (isPaused) return; // Skip movement if paused
+
         if (isGameOver) {
             clearInterval(moveInterval);
             pipeDown.remove();
@@ -203,6 +208,7 @@ function movePipe(pipeDown, pipeUp) {
                     backgroundMusic.play();
 
                     // Resume pipes
+                    if (pipeInterval) clearInterval(pipeInterval);
                     pipeInterval = setInterval(createPipe, 2000);
                 }, 5000);
                 }, 3000);
@@ -238,7 +244,7 @@ function movePipe(pipeDown, pipeUp) {
 
 // Bird position update
 function updateBird() {
-    if (!isGameOver) {
+    if (!isGameOver && !isPaused) {
         velocity += gravity * 0.3;
         birdY += velocity;
 
@@ -251,7 +257,8 @@ function updateBird() {
 
         bird.style.position = 'fixed';
         bird.style.top = `${birdY}px`;
-
+    }
+    if (!isGameOver) {
         requestAnimationFrame(updateBird);
     }
 }
@@ -363,37 +370,36 @@ document.addEventListener("touchstart", () => {
 
 function togglePause() {
     const pauseBtn = document.getElementById("pauseBtn");
-    const pauseIcon = pauseBtn.querySelector("pauseIcon");
-    const pauseText = pauseBtn.querySelector("pauseText");
+    const pauseIcon = pauseBtn.querySelector("#pauseIcon");
+    const pauseText = pauseBtn.querySelector("#pauseText");
 
     if (!isPaused) {
         isPaused = true;
         savedVelocity = velocity;
         velocity = 0;
 
-        //pause Intervals
+        // Pause intervals
         if (pipeInterval) clearInterval(pipeInterval);
+        pipeInterval = null;
         if (wingInterval) clearInterval(wingInterval);
+        wingInterval = null;
 
-        //stop moving grass
         movingGrass.style.animationPlayState = "paused";
+        backgroundMusic.pause();
 
-        //change icon and text
         pauseIcon.className = 'bx bx-play-circle';
         pauseText.textContent = "Play";
-    }
-    else {
+    } else {
         isPaused = false;
         velocity = savedVelocity;
 
-        //resume intervals
+        // Resume intervals only if not game over and not already running
         if (!isGameOver) {
-            pipeInterval = setInterval(createPipe, 2000);
-            wingInterval = setInterval(swapBirdWing, 200);
+            if (!pipeInterval) pipeInterval = setInterval(createPipe, 2000);
+            if (!wingInterval) wingInterval = setInterval(swapBirdWing, 200);
             movingGrass.style.animationPlayState = "running";
             backgroundMusic.play();
         }
-        //change icon and text
         pauseIcon.className = 'bx bx-pause-circle';
         pauseText.textContent = "Pause";
     }
