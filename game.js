@@ -54,21 +54,35 @@ function createPipe() {
     // Random height for top pipe
     const pipeDownHeight = Math.floor(Math.random() * (maxPipeHeight - minPipeHeight) + minPipeHeight);
 
+    //choose pipe and brick based on score:
+    let pipeDownImg = "images/pipe down.png";
+    let pipeUpImg = "images/pipe up.png";
+    
+
+    if(score >= 20){
+        pipeDownImg = "images/brick down.png";
+        pipeUpImg = "images/brick up.png";
+    }
+    if(score >= 30){
+        pipeDownImg = "images/pipe down.png";
+        pipeUpImg = "images/pipe up.png";
+    }
+
     // Pipe Down (top)
-    const pipeDown = document.createElement('div');
+    let pipeDown = document.createElement('div');
     pipeDown.classList.add('pipe', 'pipe-down');
     pipeDown.style.height = `${pipeDownHeight}px`;
     pipeDown.style.left = '100vw';
-    pipeDown.innerHTML = `<img src="images/pipe down.png" width="80" height="${pipeDownHeight}">`;
+    pipeDown.innerHTML = `<img src="${pipeDownImg}" width="80" height="${pipeDownHeight}">`;
 
     // Pipe Up (bottom)
     const pipeUpHeight = window.innerHeight - pipeDownHeight - gap;
-    const pipeUp = document.createElement('div');
+    let pipeUp = document.createElement('div');
     pipeUp.classList.add('pipe', 'pipe-up');
     pipeUp.style.height = `${pipeUpHeight}px`;
     pipeUp.style.left = '100vw';
     pipeUp.style.bottom = '0px';
-    pipeUp.innerHTML = `<img src="images/pipe up.png" width="80" height="${pipeUpHeight}">`;
+    pipeUp.innerHTML = `<img src="${pipeUpImg}" width="80" height="${pipeUpHeight}">`;
 
     gameContainer.appendChild(pipeDown);
     gameContainer.appendChild(pipeUp);
