@@ -59,11 +59,11 @@ function createPipe() {
     let pipeUpImg = "images/pipe up.png";
     
 
-    if(score >= 20){
+    if(score >= 40){
         pipeDownImg = "images/brick down.png";
         pipeUpImg = "images/brick up.png";
     }
-    if(score >= 30){
+    if(score >= 70){
         pipeDownImg = "images/pipe down.png";
         pipeUpImg = "images/pipe up.png";
     }
@@ -157,12 +157,11 @@ function movePipe(pipeDown, pipeUp) {
             scoreNumber.innerHTML = score;
             scoreNumber2.innerHTML = score;
 
-            //level up
-            if(score == 10 && !dragonActive){
-                console.log("Score = 10")
+            // Change background based on score
+            if (score == 10 && !dragonActive) {
+                console.log("Score = 10");
                 document.body.style.backgroundImage = "url('images/background_night.jpg')";
 
-                
                 dragonActive = true;
 
                 // Pause pipes
@@ -175,61 +174,56 @@ function movePipe(pipeDown, pipeUp) {
                 let dragonX = bird.getBoundingClientRect().left + 200; // Start closer to bird
                 let dragonY = bird.getBoundingClientRect().top;
 
-
                 //wait the dragon for somtime to cross the bird the remaining pipes
                 setTimeout(() => {
-
                     //sound
                     backgroundMusic.pause();
                     const dragonSound = new Audio('sounds/dragon_sound.mp3');
                     dragonSound.play();
 
                     dragonInterval = setInterval(() => {
+                        if (isPaused) return;
+                        //Follow bird
+                        const birdRect = bird.getBoundingClientRect();
+                        if (dragonY < birdRect.top) dragonY += 1;
+                        if (dragonY > birdRect.top) dragonY -= 1;
+                        dragon.style.top = `${dragonY}px`;
+                        dragonX -= 3;
+                        dragon.style.left = `${dragonX}px`;
 
-                    //Follow bird
-                    const birdRect = bird.getBoundingClientRect();
-                    if (dragonY < birdRect.top) dragonY += 1;
-                    if(dragonY > birdRect.top) dragonY -= 1;
-                    dragon.style.top = `${dragonY}px`;
-                    dragonX  -= 3;
-                    dragon.style.left = `${dragonX}px`;
+                        // Collision detection
+                        const dragonRect = dragon.getBoundingClientRect();
+                        if (
+                            dragonRect.left < birdRect.right &&
+                            dragonRect.right > birdRect.left &&
+                            dragonRect.top < birdRect.bottom &&
+                            dragonRect.bottom > birdRect.top
+                        ) {
+                            //sound
+                            dragonSound.pause();
+                            //small delay to avoid sound overlap
+                            setTimeout(() => { gameOver(); }, 200);
+                        }
+                    }, 16);
 
-                    // Collision detection
-                    const dragonRect = dragon.getBoundingClientRect();
-                    if (
-                        dragonRect.left < birdRect.right &&
-                        dragonRect.right > birdRect.left &&
-                        dragonRect.top < birdRect.bottom &&
-                        dragonRect.bottom > birdRect.top
-                    ) {
-                        //sound
-                        dragonSound.pause();
-                        
-                        //small delay to avoid sound overlap
-                        setTimeout(() => {gameOver();}, 200);
-                        
-                        
-                    }
-                }, 16)
+                    // Remove dragon after 5 seconds
+                    setTimeout(() => {
+                        clearInterval(dragonInterval);
+                        dragon.style.display = "none";
+                        dragon.style.visibility = "hidden"; // Hide dragon after
+                        dragonActive = false;
 
-                // Remove dragon after 5 seconds
-                setTimeout(() => {
-                    clearInterval(dragonInterval);
-                    dragon.style.display = "none";
-                    dragon.style.visibility = "hidden"; // Hide dragon after
-                    dragonActive = false;
+                        //background music resume
+                        backgroundMusic.play();
 
-                    //background music resume
-                    backgroundMusic.play();
-
-                    // Resume pipes
-                    if (pipeInterval) clearInterval(pipeInterval);
-                    pipeInterval = setInterval(createPipe, 2000);
-                }, 5000);
+                        // Resume pipes
+                        if (pipeInterval) clearInterval(pipeInterval);
+                        pipeInterval = setInterval(createPipe, 2000);
+                    }, 5000);
                 }, 3000);
-
             }
 
+            //level background changes
             if(score == 20){
                 console.log("Score = 20")
                 document.body.style.backgroundImage = "url('images/background.jpg')";
@@ -241,7 +235,7 @@ function movePipe(pipeDown, pipeUp) {
                 document.body.style.backgroundImage = "url('images/background_night.jpg')";
             }
             if(score == 60){
-                console.log("Score = 80")
+                console.log("Score = 60")
                 document.body.style.backgroundImage = "url('images/background_day.jpg')";
             }
         }
