@@ -20,13 +20,16 @@
         
         <a class="start-game" href="game.html">Start Game</a>
         <!-- <a class="resume-game" href="#">Resume Game</a> -->
-        <a class="options" href="#">Options</a>
-        <a class="exit" href="#">Exit</a>
+        <!-- <a class="options" href="#">Options</a> -->
+        <a class="exit" href="#" onclick="closetab()">Exit</a>
     </div>
 
 
     <script>
-        
+        function closetab(){
+            window.open('','_self');
+            window.close();
+        }
         
     </script>
 </body>

@@ -78,22 +78,25 @@
             top: 2vh;
             left: 0.2vw;
             z-index: 1000;
-            font-size: 3rem;
+            font-size: 2rem;
             font-weight: bold;
             color: var(--font-color);
             margin-bottom: 1.2rem;
+            font-family: "rock salt";
         }
-        .pause{
+        .score .pause{
         display: flex;
         flex-direction: row;
         gap: 0.8rem;
-        position: fixed;
-        top: 15vh;
-        left: 0.2vw;
-        z-index: 1000;
+        align-items: center;
+        
         font-size: 2rem;
         font-weight: bold;
         color: var(--font-color);
+        font-family: "rock salt";
+        }
+        .score .pause i{
+            font-size: 2.5rem;
         }
 
         .bird img{
@@ -105,7 +108,7 @@
         #dragon {
                 position: fixed;
                 top: 20vh;
-                left: 60vw;
+                left: 80vw;
                 /* height: 35%;
                 width: 35%; */
                 display: none;
@@ -315,28 +318,20 @@
     }
     .score p{
         font-size: 1.5rem;
+        font-family: "rock salt";
     }
-    .pause {
+    .score .pause {
         display: flex;
-        position: fixed;
-        top: 2vh;
-        left: 80vw;
         font-size: 1.2rem;
         gap: 0.4rem;
-        padding: 0.3em 0.7em;
-        border-radius: 1em;
-        z-index: 1000;
+        align-items: center;
+        font-family: "rock salt";
     }
 
-    .pause i {
+    .score .pause i {
         font-size: 1.5rem;
     }
 
-    .pause p {
-        font-size: 1.5rem;
-        margin: 0;
-        padding: 0;
-    }
 }
 
 /* Extra Small Devices */
@@ -375,16 +370,15 @@
         padding: 0.2em 0.5em;
         gap: 0.3em;
     }
-    .pause {
+    .score .pause {
         display: flex;
-        position: fixed;
-        top: 2vh;
-        left: 68%;
         font-size: 1rem;
         gap: 0.3rem;
-        padding: 0.2em 0.5em;
-        border-radius: 1em;
-        z-index: 1000;
+        align-items: center;
+        font-family: "rock salt";
+    }
+    .score .pause i {
+        font-size: 1rem;
     }
     .gameover-score {
         display: flex;
@@ -421,14 +415,15 @@
 
 
     <div class="score">
+        <div class="pause" id="pauseBtn">
+            <i class='bx bx-pause-circle' id="pauseIcon"></i>
+        </div>
+
         <p>Score: </p>
         <p class="scorenumber"> </p>
     </div>
 
-    <div class="pause" id="pauseBtn">
-        <i class='bx bx-pause-circle' id="pauseIcon"></i>
-        <p id="pauseText">Pause</p>
-    </div>
+
 
     <div class="start-message">
         <p>Press Space to <br> start the game</p>

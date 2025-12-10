@@ -220,7 +220,7 @@ function movePipe(pipeDown, pipeUp) {
                         if (pipeInterval) clearInterval(pipeInterval);
                         pipeInterval = setInterval(createPipe, 2000);
                     }, 5000);
-                }, 3000);
+                }, 5000);
             }
 
             //level background changes
